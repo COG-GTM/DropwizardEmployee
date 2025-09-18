@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  dropwizard-employee:
+    build: .
+    container_name: dropwizard-employee
+    ports:
+      - "8080:8080"  # Application port
+      - "8081:8081"  # Admin port
+    volumes:
+      - employee_data:/app/data      # Database persistence
+      - employee_logs:/app/logs      # Log persistence
+    environment:
+      - DW_DEFAULT_NAME=Docker User  # Example environment variable
+      - GRAPHITE_HOST=graphite       # Graphite host for metrics
+    depends_on:
+      - graphite
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "./healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Optional Graphite service for metrics collection
+  graphite:
+    image: graphiteapp/graphite-statsd:latest
+    container_name: graphite
+    ports:
+      - "2003:2003"  # Carbon receiver port
+      - "8080:80"    # Graphite web interface (conflicts with app, use different port in production)
+    volumes:
+      - graphite_data:/opt/graphite/storage
+    restart: unless-stopped
+
+volumes:
+  employee_data:
+    driver: local
+  employee_logs:
+    driver: local
+  graphite_data:
+    driver: local
+
+networks:
+  default:
+    name: dropwizard-network
