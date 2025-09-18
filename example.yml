@@ -14,8 +14,8 @@ database:
   # the password
   password: sa
 
-  # the JDBC URL
-  url: jdbc:h2:./target/example
+  # the JDBC URL - updated for container persistence
+  url: jdbc:h2:/app/data/example
 
 # use the simple server factory if you only want to run on a single port
 #server:
@@ -72,8 +72,8 @@ logging:
     - type: file
       threshold: INFO
       logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
-      currentLogFilename: /tmp/application.log
-      archivedLogFilenamePattern: /tmp/application-%d{yyyy-MM-dd}-%i.log.gz
+      currentLogFilename: /app/logs/application.log
+      archivedLogFilenamePattern: /app/logs/application-%d{yyyy-MM-dd}-%i.log.gz
       archivedFileCount: 7
       timeZone: UTC
       maxFileSize: 10MB
@@ -87,7 +87,7 @@ viewRendererConfiguration:
 metrics:
   reporters:
     - type: graphite
-      host: localhost
+      host: ${GRAPHITE_HOST:-localhost}
       port: 2003
       prefix: example
       frequency: 1m
