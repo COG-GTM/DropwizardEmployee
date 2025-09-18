@@ -1,0 +1,15 @@
+.git
+.gitignore
+README.md
+Dockerfile
+.dockerignore
+target/classes
+target/test-classes
+target/maven-*
+target/original-*
+target/*-sources.jar
+.settings
+.project
+.classpath
+*.iml
+.idea

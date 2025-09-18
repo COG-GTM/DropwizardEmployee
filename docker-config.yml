@@ -1,0 +1,59 @@
+template: Hello, %s!
+
+defaultName: ${DW_DEFAULT_NAME:-Stranger}
+
+# Database settings - container-friendly path
+database:
+  # the name of your JDBC driver
+  driverClass: org.h2.Driver
+
+  # the username
+  user: sa
+
+  # the password
+  password: sa
+
+  # the JDBC URL - container-friendly path
+  url: jdbc:h2:/app/data/example
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+  adminConnectors:
+    - type: http
+      port: 8081
+
+# Container-friendly logging to stdout
+logging:
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: INFO
+
+  # Logger-specific levels.
+  loggers:
+    # Sets the level for 'com.example.app' to DEBUG.
+    com.example.app: DEBUG
+
+    # Redirects SQL logs to a separate file
+    org.hibernate.SQL:
+      level: DEBUG
+
+  appenders:
+    - type: console
+      threshold: INFO
+      logFormat: "%-6level [%d{HH:mm:ss.SSS}] [%t] %logger{5} - %X{code} %msg %n"
+
+# the key needs to match the suffix of the renderer
+viewRendererConfiguration:
+    .ftl:
+        strict_syntax: yes
+        whitespace_stripping: yes
+
+# Metrics configuration with environment variable support
+metrics:
+  reporters:
+    - type: graphite
+      host: ${GRAPHITE_HOST:-localhost}
+      port: ${GRAPHITE_PORT:-2003}
+      prefix: ${METRICS_PREFIX:-example}
+      frequency: 1m
