@@ -1,7 +1,7 @@
 package com.dropwizard.employee;
 
 import com.dropwizard.employee.core.Employee;
-import com.dropwizard.employee.core.Template;
+
 import com.dropwizard.employee.db.EmployeeDAO;
 import com.dropwizard.employee.resources.EmployeeResource;
 import io.dropwizard.Application;
@@ -18,7 +18,11 @@ import io.dropwizard.views.ViewBundle;
 import java.util.Map;
 
 /**
- * Created by mchougule on 1/16/2017.
+ * Dropwizard Employee Application.
+ * Upgraded to Java 8 with lambda expressions and modern API usage.
+ *
+ * @author mchougule
+ * @since 1.0.0
  */
 public class EmployeeApplication extends Application<EmployeeConfiguration> {
     public static void main(String[] args) throws Exception {
@@ -60,9 +64,9 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
         });
     }
 
-    public void run(EmployeeConfiguration employeeConfiguration, Environment environment) throws Exception {
+    @Override
+    public void run(EmployeeConfiguration employeeConfiguration, Environment environment) {
         final EmployeeDAO employeeDAO = new EmployeeDAO(hibernateBundle.getSessionFactory());
-        final Template template = employeeConfiguration.buildTemplate();
 
         environment.jersey().register(new EmployeeResource(employeeDAO));
     }

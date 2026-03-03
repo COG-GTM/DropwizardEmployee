@@ -11,7 +11,11 @@ import javax.persistence.Table;
 import java.util.Objects;
 
 /**
- * Created by mchougule on 1/16/2017.
+ * Employee entity representing a person in the system.
+ * Uses JPA annotations for ORM mapping with Hibernate.
+ *
+ * @author mchougule
+ * @since 1.0.0
  */
 
 @Entity
@@ -93,5 +97,11 @@ public class Employee {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, jobTitle);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Employee[id=%d, firstName='%s', lastName='%s', jobTitle='%s']",
+                id, firstName, lastName, jobTitle);
     }
 }
