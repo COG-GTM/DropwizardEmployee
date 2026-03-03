@@ -7,12 +7,20 @@ import io.dropwizard.hibernate.UnitOfWork;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
- * Created by mchougule on 1/16/2017.
+ * RESTful resource for Employee CRUD operations.
+ * Uses Java 8 Optional and Stream API for cleaner data handling.
+ *
+ * @author mchougule
+ * @since 1.0.0
  */
 @Path("/employee")
 @Produces(MediaType.APPLICATION_JSON)
@@ -30,18 +38,28 @@ public class EmployeeResource {
         return employeeDAO.create(employee);
     }
 
-    // TODO: Add a view here!
-//    @GET
-//    @Path("/view_mustache")
-//    @UnitOfWork
-//    @Produces(MediaType.TEXT_HTML)
-//    public EmployeeView getPersonViewMustache(@PathParam("personId") LongParam personId) {
-//        return new EmployeeView(EmployeeView.Template.MUSTACHE, findSafely(personId.get()));
-//    }
-
     @GET
     @UnitOfWork
     public List<Employee> listEmployee() {
         return employeeDAO.findAll();
+    }
+
+    @GET
+    @Path("/{id}")
+    @UnitOfWork
+    public Response getEmployee(@PathParam("id") Long id) {
+        Optional<Employee> employee = employeeDAO.findById(id);
+        return employee
+                .map(e -> Response.ok(e).build())
+                .orElse(Response.status(Response.Status.NOT_FOUND).build());
+    }
+
+    @GET
+    @Path("/jobtitle/{jobTitle}")
+    @UnitOfWork
+    public List<Employee> getEmployeesByJobTitle(@PathParam("jobTitle") String jobTitle) {
+        return employeeDAO.findAll().stream()
+                .filter(e -> e.getJobTitle().equalsIgnoreCase(jobTitle))
+                .collect(Collectors.toList());
     }
 }

@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Created by mchougule on 1/16/2017.
+ * Data Access Object for Employee entity.
+ * Uses Dropwizard's Hibernate integration with Java 8 Optional for null-safe lookups.
+ *
+ * @author mchougule
+ * @since 1.0.0
  */
 public class EmployeeDAO extends AbstractDAO<Employee> {
     public EmployeeDAO(SessionFactory sessionFactory) {
