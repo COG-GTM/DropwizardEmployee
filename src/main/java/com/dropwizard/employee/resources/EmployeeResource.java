@@ -4,6 +4,7 @@ import com.dropwizard.employee.core.Employee;
 import com.dropwizard.employee.db.EmployeeDAO;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,6 +27,7 @@ public class EmployeeResource {
 
     @POST
     @UnitOfWork
+    @Consumes(MediaType.APPLICATION_JSON)
     public Employee createEmployee(Employee employee) {
         return employeeDAO.create(employee);
     }
