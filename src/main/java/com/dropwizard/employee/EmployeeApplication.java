@@ -1,7 +1,6 @@
 package com.dropwizard.employee;
 
 import com.dropwizard.employee.core.Employee;
-import com.dropwizard.employee.core.Template;
 import com.dropwizard.employee.db.EmployeeDAO;
 import com.dropwizard.employee.resources.EmployeeResource;
 import io.dropwizard.Application;
@@ -60,9 +59,9 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
         });
     }
 
+    @Override
     public void run(EmployeeConfiguration employeeConfiguration, Environment environment) throws Exception {
         final EmployeeDAO employeeDAO = new EmployeeDAO(hibernateBundle.getSessionFactory());
-        final Template template = employeeConfiguration.buildTemplate();
 
         environment.jersey().register(new EmployeeResource(employeeDAO));
     }

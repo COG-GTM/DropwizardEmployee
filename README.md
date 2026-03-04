@@ -1,38 +1,73 @@
-Employee REST API using Dropwizard 1.0.5
+# DropwizardEmployee
 
-Java 8 needed to run this code.
+Employee REST API using Dropwizard 1.0.5 and **Java 8**.
 
 Dropwizard is an open source Java framework for developing REST APIs.
 
+## Prerequisites
 
-Libraries using from Dropwizard:
+- **Java 8** (JDK 1.8) or later
+- **Apache Maven** 3.x
 
-1. * [Jetty](http://www.eclipse.org/jetty/) for serving an HTTP server inside this project'.
-2. * [Jersey](http://jersey.java.net/) for developing RESTful Web Services in Java'.
-3. * [Jackson](https://github.com/FasterXML/jackson) for objects to/from JSON conversion'.
+## Libraries
 
-Using Hibernate features for the database.
+This project uses the following Dropwizard-bundled libraries:
 
-# Running The Application
+1. [Jetty](http://www.eclipse.org/jetty/) - Embedded HTTP server
+2. [Jersey](http://jersey.java.net/) - RESTful Web Services framework
+3. [Jackson](https://github.com/FasterXML/jackson) - JSON serialization/deserialization
+4. [Hibernate](http://hibernate.org/) - ORM for database access (H2 embedded database)
 
-To test the example application run the following commands.
+## Java 8 Features Used
 
-* To package the example run.
+This project leverages the following Java 8 features:
 
-        mvn package
+- **`java.util.Optional`** - Used in DAO and Template classes for null-safe value handling
+- **`java.util.StringJoiner`** - Used in Employee's `toString()` for readable string representation
+- **`java.util.Objects`** - Used for null-safe `equals()` and `hashCode()` implementations
+- **JUnit 4 annotations** - Modern test annotations (`@Test`, `@Before`) replacing JUnit 3 style
 
-* To setup the h2 database run.
+## Setup and Running
 
-		java -jar target/DropwizardEmployee-1.0.5.jar db migrate example.yml
+### 1. Build the project
 
-* To run the server run.
+```bash
+mvn clean package
+```
 
-		java -jar target/DropwizardEmployee-1.0.5.jar server example.yml
+### 2. Run the tests
 
-* To post data into the application.
+```bash
+mvn test
+```
 
-	curl -H "Content-Type: application/json" -X POST -d '{"firstName":"Mayur", "lastName":"Chougule","jobTitle":"Software Engineer"}' http://localhost:8080/employee
+### 3. Set up the H2 database
 
-* To view the list of employees.
+```bash
+java -jar target/DropwizardEmployee-1.0.5.jar db migrate example.yml
+```
 
-	http://localhost:8080/employee
+### 4. Start the server
+
+```bash
+java -jar target/DropwizardEmployee-1.0.5.jar server example.yml
+```
+
+The application will be available at `http://localhost:8080`.
+The admin interface will be available at `http://localhost:8081`.
+
+## API Endpoints
+
+### Create an employee
+
+```bash
+curl -H "Content-Type: application/json" -X POST \
+  -d '{"firstName":"Mayur", "lastName":"Chougule","jobTitle":"Software Engineer"}' \
+  http://localhost:8080/employee
+```
+
+### List all employees
+
+```
+GET http://localhost:8080/employee
+```
