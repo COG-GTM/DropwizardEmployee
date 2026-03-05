@@ -1,6 +1,6 @@
-Employee REST API using Dropwizard 1.0.5
+Employee REST API using Dropwizard 4.0.7
 
-Java 8 needed to run this code.
+Java 21 needed to run this code.
 
 Dropwizard is an open source Java framework for developing REST APIs.
 
