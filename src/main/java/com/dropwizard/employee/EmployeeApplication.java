@@ -4,16 +4,16 @@ import com.dropwizard.employee.core.Employee;
 import com.dropwizard.employee.core.Template;
 import com.dropwizard.employee.db.EmployeeDAO;
 import com.dropwizard.employee.resources.EmployeeResource;
-import io.dropwizard.Application;
+import io.dropwizard.core.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
-import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.setup.Environment;
-import io.dropwizard.views.ViewBundle;
+import io.dropwizard.core.setup.Bootstrap;
+import io.dropwizard.core.setup.Environment;
+import io.dropwizard.views.common.ViewBundle;
 
 import java.util.Map;
 
@@ -60,6 +60,7 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
         });
     }
 
+    @Override
     public void run(EmployeeConfiguration employeeConfiguration, Environment environment) throws Exception {
         final EmployeeDAO employeeDAO = new EmployeeDAO(hibernateBundle.getSessionFactory());
         final Template template = employeeConfiguration.buildTemplate();
