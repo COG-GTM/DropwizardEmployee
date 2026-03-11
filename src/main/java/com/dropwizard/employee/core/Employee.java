@@ -9,6 +9,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import java.util.Objects;
+import java.util.StringJoiner;
 
 /**
  * Created by mchougule on 1/16/2017.
@@ -93,5 +94,15 @@ public class Employee {
     @Override
     public int hashCode() {
         return Objects.hash(id, firstName, lastName, jobTitle);
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", Employee.class.getSimpleName() + "[", "]")
+                .add("id=" + id)
+                .add("firstName='" + firstName + "'")
+                .add("lastName='" + lastName + "'")
+                .add("jobTitle='" + jobTitle + "'")
+                .toString();
     }
 }

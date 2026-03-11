@@ -18,9 +18,11 @@ import io.dropwizard.views.ViewBundle;
 import java.util.Map;
 
 /**
- * Created by mchougule on 1/16/2017.
+ * Main Dropwizard application class for the Employee REST API.
+ * Requires Java 8 or higher.
  */
 public class EmployeeApplication extends Application<EmployeeConfiguration> {
+
     public static void main(String[] args) throws Exception {
         new EmployeeApplication().run(args);
     }
@@ -43,7 +45,6 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
                 )
         );
 
-//        bootstrap.addCommand(new RenderCommand());
         bootstrap.addBundle(new AssetsBundle());
         bootstrap.addBundle(new MigrationsBundle<EmployeeConfiguration>() {
             @Override
@@ -60,7 +61,8 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
         });
     }
 
-    public void run(EmployeeConfiguration employeeConfiguration, Environment environment) throws Exception {
+    @Override
+    public void run(EmployeeConfiguration employeeConfiguration, Environment environment) {
         final EmployeeDAO employeeDAO = new EmployeeDAO(hibernateBundle.getSessionFactory());
         final Template template = employeeConfiguration.buildTemplate();
 
