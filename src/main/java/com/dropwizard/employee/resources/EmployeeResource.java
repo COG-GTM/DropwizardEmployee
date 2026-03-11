@@ -58,6 +58,9 @@ public class EmployeeResource {
     @Path("/search")
     @UnitOfWork
     public List<Employee> searchByJobTitle(@QueryParam("jobTitle") String jobTitle) {
+        if (jobTitle == null || jobTitle.isEmpty()) {
+            return employeeDAO.findAll();
+        }
         return employeeDAO.findAll().stream()
                 .filter(e -> e.getJobTitle() != null
                         && e.getJobTitle().toLowerCase().contains(jobTitle.toLowerCase()))
