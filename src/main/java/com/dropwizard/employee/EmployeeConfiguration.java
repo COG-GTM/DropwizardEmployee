@@ -3,7 +3,7 @@ package com.dropwizard.employee;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
-import org.hibernate.validator.constraints.NotEmpty;
+import jakarta.validation.constraints.NotBlank;
 import com.dropwizard.employee.core.Template;
 
 import javax.validation.Valid;
@@ -16,10 +16,10 @@ import java.util.Map;
  */
 public class EmployeeConfiguration extends Configuration {
 
-    @NotEmpty
+    @NotBlank
     private String template;
 
-    @NotEmpty
+    @NotBlank
     private String defaultName = "Employee!";
 
     @Valid
