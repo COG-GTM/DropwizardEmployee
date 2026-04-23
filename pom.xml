@@ -8,12 +8,16 @@
   <name>DropwizardEmployee</name>
   <url>http://maven.apache.org</url>
 
+  <properties>
+    <dropwizard.version>4.0.7</dropwizard.version>
+  </properties>
+
   <dependencyManagement>
     <dependencies>
       <dependency>
         <groupId>io.dropwizard</groupId>
         <artifactId>dropwizard-bom</artifactId>
-        <version>${project.version}</version>
+        <version>${dropwizard.version}</version>
         <type>pom</type>
         <scope>import</scope>
       </dependency>
