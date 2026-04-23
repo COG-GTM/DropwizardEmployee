@@ -22,6 +22,6 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
     }
 
     public List<Employee> findAll() {
-        return list(namedQuery("com.dropwizard.employee.core.Employee.findAll"));
+        return currentSession().createNamedQuery("com.dropwizard.employee.core.Employee.findAll", Employee.class).list();
     }
 }
