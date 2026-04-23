@@ -34,11 +34,11 @@ server:
 #      port: 8443
 #      keyStorePath: example.keystore
 #      keyStorePassword: example
-    #this requires the alpn-boot library on the JVM's boot classpath
     #- type: h2
     #  port: 8445
     #  keyStorePath: example.keystore
     #  keyStorePassword: example
+    # Note: Java 11+ has native ALPN support; no alpn-boot bootclasspath jar is needed.
   adminConnectors:
     - type: http
       port: 8081
