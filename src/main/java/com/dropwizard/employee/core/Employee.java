@@ -8,6 +8,9 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 import java.util.Objects;
 
 /**
@@ -30,12 +33,18 @@ public class Employee {
     private long id;
 
     @Column(name = "firstName", nullable = false)
+    @NotBlank
+    @Size(min = 1, max = 255)
     private String firstName;
 
     @Column(name = "lastName", nullable = false)
+    @NotBlank
+    @Size(min = 1, max = 255)
     private String lastName;
 
     @Column(name = "jobTitle", nullable = false)
+    @NotBlank
+    @Size(min = 1, max = 255)
     private String jobTitle;
 
     public Employee() {
