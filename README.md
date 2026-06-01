@@ -1,6 +1,6 @@
-Employee REST API using Dropwizard 1.0.5
+Employee REST API using Dropwizard 5.0.2
 
-Java 8 needed to run this code.
+Java 21 needed to run this code.
 
 Dropwizard is an open source Java framework for developing REST APIs.
 
@@ -23,11 +23,11 @@ To test the example application run the following commands.
 
 * To setup the h2 database run.
 
-		java -jar target/DropwizardEmployee-1.0.5.jar db migrate example.yml
+		java -jar target/DropwizardEmployee-2.0.0-SNAPSHOT.jar db migrate example.yml
 
 * To run the server run.
 
-		java -jar target/DropwizardEmployee-1.0.5.jar server example.yml
+		java -jar target/DropwizardEmployee-2.0.0-SNAPSHOT.jar server example.yml
 
 * To post data into the application.
 

@@ -21,7 +21,8 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
         return persist(person);
     }
 
+    @SuppressWarnings("unchecked")
     public List<Employee> findAll() {
-        return list(namedQuery("com.dropwizard.employee.core.Employee.findAll"));
+        return list((org.hibernate.query.Query<Employee>) namedQuery("com.dropwizard.employee.core.Employee.findAll"));
     }
 }

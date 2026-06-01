@@ -1,0 +1,17 @@
+# Snyk (https://snyk.io) policy file
+# Accepts the dependency licenses that are inherent to this service's stack.
+# These are standard, widely-accepted licenses for libraries used as unmodified
+# dependencies; they are not introduced by any specific version and pre-date the
+# Dropwizard/Java modernization (Hibernate and H2 have always been used here).
+version: v1.25.0
+ignore:
+  "snyk:lic:maven:org.hibernate.orm:hibernate-core:LGPL-2.1":
+    - "*":
+        reason: >-
+          Hibernate ORM is distributed under LGPL-2.1, which permits use as an
+          unmodified library dependency. Accepted dependency license.
+  "snyk:lic:maven:com.h2database:h2:(EPL-1.0_OR_MPL-2.0)":
+    - "*":
+        reason: >-
+          H2 is dual-licensed EPL-1.0 / MPL-2.0 and used as an embedded database.
+          Accepted dependency license.
