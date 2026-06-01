@@ -1,4 +1,4 @@
-Employee REST API using Dropwizard 4.0.7
+Employee REST API using Dropwizard 5.0.2
 
 Java 21 needed to run this code.
 
