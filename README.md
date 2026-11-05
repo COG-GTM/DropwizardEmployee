@@ -25,14 +25,20 @@ To test the example application run the following commands.
 
 		java -jar target/DropwizardEmployee-1.0.5.jar db migrate example.yml
 
-* To run the server run.
+* To run the server run. The `/employee` API requires HTTP Basic authentication; the server will not
+  start until `EMPLOYEE_API_PASSWORD` (at least 12 characters) is set. `EMPLOYEE_API_USERNAME` defaults to `admin`.
+  Users and roles (`READER`, `WRITER`) are configured in the `auth` block of `example.yml`.
 
+		export EMPLOYEE_API_PASSWORD='<choose-a-strong-password>'
 		java -jar target/DropwizardEmployee-1.0.5.jar server example.yml
 
-* To post data into the application.
+* To post data into the application (requires the `WRITER` role).
 
-	curl -H "Content-Type: application/json" -X POST -d '{"firstName":"Mayur", "lastName":"Chougule","jobTitle":"Software Engineer"}' http://localhost:8080/employee
+	curl -u "admin:$EMPLOYEE_API_PASSWORD" -H "Content-Type: application/json" -X POST -d '{"firstName":"Mayur", "lastName":"Chougule","jobTitle":"Software Engineer"}' http://localhost:8080/employee
 
-* To view the list of employees.
+* To view the list of employees (requires the `READER` or `WRITER` role).
 
-	http://localhost:8080/employee
+	curl -u "admin:$EMPLOYEE_API_PASSWORD" http://localhost:8080/employee
+
+  Requests without valid credentials get `401 Unauthorized`; authenticated users without the required role get `403 Forbidden`.
+  Basic credentials are only base64-encoded, so expose the API over HTTPS (see the commented `https` connector in `example.yml`) or behind a TLS-terminating proxy.

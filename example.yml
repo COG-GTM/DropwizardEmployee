@@ -2,6 +2,16 @@ template: Hello, %s!
 
 defaultName: ${DW_DEFAULT_NAME:-Stranger}
 
+# API authentication (HTTP Basic). Every /employee request must authenticate as one of these users.
+# The server refuses to start unless EMPLOYEE_API_PASSWORD is set (min. 12 characters).
+# Roles: READER may GET /employee, WRITER may GET and POST /employee.
+auth:
+  realm: employee-api
+  users:
+    - username: ${EMPLOYEE_API_USERNAME:-admin}
+      password: ${EMPLOYEE_API_PASSWORD:-}
+      roles: [READER, WRITER]
+
 # Database settings.
 database:
 

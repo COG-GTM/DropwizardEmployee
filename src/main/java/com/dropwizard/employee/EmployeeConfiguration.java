@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.dropwizard.Configuration;
 import io.dropwizard.db.DataSourceFactory;
 import org.hibernate.validator.constraints.NotEmpty;
+import com.dropwizard.employee.auth.AuthConfiguration;
 import com.dropwizard.employee.core.Template;
 
 import javax.validation.Valid;
@@ -25,6 +26,10 @@ public class EmployeeConfiguration extends Configuration {
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
+
+    @Valid
+    @NotNull
+    private AuthConfiguration auth = new AuthConfiguration();
 
     @NotNull
     private Map<String, Map<String, String>> viewRendererConfiguration = Collections.emptyMap();
@@ -57,6 +62,16 @@ public class EmployeeConfiguration extends Configuration {
     @JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
         this.database = dataSourceFactory;
+    }
+
+    @JsonProperty("auth")
+    public AuthConfiguration getAuth() {
+        return auth;
+    }
+
+    @JsonProperty("auth")
+    public void setAuth(AuthConfiguration auth) {
+        this.auth = auth;
     }
 
     @JsonProperty("viewRendererConfiguration")
