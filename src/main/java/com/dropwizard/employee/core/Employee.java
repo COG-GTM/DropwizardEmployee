@@ -1,5 +1,7 @@
 package com.dropwizard.employee.core;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,6 +16,7 @@ import java.util.Objects;
  * Created by mchougule on 1/16/2017.
  */
 
+@JsonIgnoreProperties(value = "id", allowGetters = true)
 @Entity
 @Table(name = "people")
 @NamedQueries(
