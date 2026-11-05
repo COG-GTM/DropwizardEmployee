@@ -1,9 +1,11 @@
 package com.dropwizard.employee.resources;
 
+import com.dropwizard.employee.auth.User;
 import com.dropwizard.employee.core.Employee;
 import com.dropwizard.employee.db.EmployeeDAO;
 import io.dropwizard.hibernate.UnitOfWork;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -26,6 +28,7 @@ public class EmployeeResource {
 
     @POST
     @UnitOfWork
+    @RolesAllowed(User.ROLE_WRITER)
     public Employee createEmployee(Employee employee) {
         return employeeDAO.create(employee);
     }
@@ -41,6 +44,7 @@ public class EmployeeResource {
 
     @GET
     @UnitOfWork
+    @RolesAllowed({User.ROLE_READER, User.ROLE_WRITER})
     public List<Employee> listEmployee() {
         return employeeDAO.findAll();
     }

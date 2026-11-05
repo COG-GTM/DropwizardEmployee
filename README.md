@@ -21,6 +21,21 @@ To test the example application run the following commands.
 
         mvn package
 
+* Configure the environment. `example.yml` is used by both `db migrate` and `server`, and Dropwizard validates the
+  whole file for both commands, so export these first. The `/employee` API requires HTTP Basic authentication and is
+  served over HTTPS on port 8443; nothing starts until `EMPLOYEE_API_PASSWORD` (at least 12 characters),
+  `EMPLOYEE_KEYSTORE_PATH` and `EMPLOYEE_KEYSTORE_PASSWORD` are set. `EMPLOYEE_API_USERNAME` defaults to `admin`.
+  Users and roles (`READER`, `WRITER`) are configured in the `auth` block of `example.yml`. For local development you
+  can create a self-signed keystore (do not commit it; the bundled `example.keystore` certificate expired in 2025 and
+  is rejected by Jetty):
+
+		keytool -genkeypair -alias localhost -keyalg RSA -keysize 2048 -validity 365 -dname CN=localhost \
+		  -keystore dev.keystore -storepass '<keystore-password>' -keypass '<keystore-password>'
+		export EMPLOYEE_API_PASSWORD='<choose-a-strong-password>'
+		export EMPLOYEE_KEYSTORE_PATH=dev.keystore EMPLOYEE_KEYSTORE_PASSWORD='<keystore-password>'
+
+  Plain HTTP on port 8080 only listens on `127.0.0.1` (override with `EMPLOYEE_HTTP_BIND_HOST` only behind a TLS-terminating proxy).
+
 * To setup the h2 database run.
 
 		java -jar target/DropwizardEmployee-1.0.5.jar db migrate example.yml
@@ -29,10 +44,12 @@ To test the example application run the following commands.
 
 		java -jar target/DropwizardEmployee-1.0.5.jar server example.yml
 
-* To post data into the application.
+* To post data into the application (requires the `WRITER` role). `-k` is only needed for a self-signed keystore.
 
-	curl -H "Content-Type: application/json" -X POST -d '{"firstName":"Mayur", "lastName":"Chougule","jobTitle":"Software Engineer"}' http://localhost:8080/employee
+	curl -k -u "admin:$EMPLOYEE_API_PASSWORD" -H "Content-Type: application/json" -X POST -d '{"firstName":"Mayur", "lastName":"Chougule","jobTitle":"Software Engineer"}' https://localhost:8443/employee
 
-* To view the list of employees.
+* To view the list of employees (requires the `READER` or `WRITER` role).
 
-	http://localhost:8080/employee
+	curl -k -u "admin:$EMPLOYEE_API_PASSWORD" https://localhost:8443/employee
+
+  Requests without valid credentials get `401 Unauthorized`; authenticated users without the required role get `403 Forbidden`.

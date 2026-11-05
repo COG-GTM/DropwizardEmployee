@@ -2,6 +2,18 @@ template: Hello, %s!
 
 defaultName: ${DW_DEFAULT_NAME:-Stranger}
 
+# API authentication (HTTP Basic). Every /employee request must authenticate as one of these users.
+# The server refuses to start unless EMPLOYEE_API_PASSWORD is set (min. 12 characters).
+# Roles: READER may GET /employee, WRITER may GET and POST /employee.
+# Secrets use literal block scalars (|-) so characters such as " #", ":" or quotes are kept verbatim.
+auth:
+  realm: employee-api
+  users:
+    - username: ${EMPLOYEE_API_USERNAME:-admin}
+      password: |-
+        ${EMPLOYEE_API_PASSWORD:-}
+      roles: [READER, WRITER]
+
 # Database settings.
 database:
 
@@ -27,13 +39,22 @@ database:
 server:
 #  softNofileLimit: 1000
 #  hardNofileLimit: 1000
+  # Basic credentials are only base64-encoded, so the API is served over HTTPS (8443).
+  # Plain HTTP (8080) binds to loopback by default; only widen EMPLOYEE_HTTP_BIND_HOST
+  # behind a TLS-terminating proxy. The server refuses to start without EMPLOYEE_KEYSTORE_PATH/PASSWORD.
   applicationConnectors:
+    - type: https
+      port: 8443
+      keyStorePath: ${EMPLOYEE_KEYSTORE_PATH:-}
+      keyStorePassword: |-
+        ${EMPLOYEE_KEYSTORE_PASSWORD:-}
+      # No trust store / client certs: skip Jetty's startup chain self-check and client-cert validation.
+      # Clients still verify the server certificate as usual.
+      validateCerts: false
+      validatePeers: false
     - type: http
+      bindHost: ${EMPLOYEE_HTTP_BIND_HOST:-127.0.0.1}
       port: 8080
-#    - type: https
-#      port: 8443
-#      keyStorePath: example.keystore
-#      keyStorePassword: example
     #this requires the alpn-boot library on the JVM's boot classpath
     #- type: h2
     #  port: 8445

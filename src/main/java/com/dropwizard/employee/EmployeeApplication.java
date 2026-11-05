@@ -1,5 +1,7 @@
 package com.dropwizard.employee;
 
+import com.dropwizard.employee.auth.ConfiguredUserAuthenticator;
+import com.dropwizard.employee.auth.EmployeeAuth;
 import com.dropwizard.employee.core.Employee;
 import com.dropwizard.employee.core.Template;
 import com.dropwizard.employee.db.EmployeeDAO;
@@ -14,6 +16,7 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import java.util.Map;
 
@@ -64,6 +67,10 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
         final EmployeeDAO employeeDAO = new EmployeeDAO(hibernateBundle.getSessionFactory());
         final Template template = employeeConfiguration.buildTemplate();
 
+        environment.jersey().register(EmployeeAuth.basicAuthFeature(
+                employeeConfiguration.getAuth().getRealm(),
+                new ConfiguredUserAuthenticator(employeeConfiguration.getAuth().getUsers())));
+        environment.jersey().register(RolesAllowedDynamicFeature.class);
         environment.jersey().register(new EmployeeResource(employeeDAO));
     }
 }
