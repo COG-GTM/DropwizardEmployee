@@ -27,7 +27,8 @@ public class EmployeeResource {
     @POST
     @UnitOfWork
     public Employee createEmployee(Employee employee) {
-        return employeeDAO.create(employee);
+        return employeeDAO.create(new Employee(
+                employee.getFirstName(), employee.getLastName(), employee.getJobTitle()));
     }
 
     // TODO: Add a view here!

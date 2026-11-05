@@ -18,7 +18,8 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
         return Optional.ofNullable(get(id));
     }
     public Employee create(Employee person)  {
-        return persist(person);
+        currentSession().save(person);
+        return person;
     }
 
     public List<Employee> findAll() {
