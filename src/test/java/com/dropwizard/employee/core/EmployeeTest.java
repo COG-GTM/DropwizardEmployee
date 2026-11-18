@@ -2,7 +2,9 @@ package com.dropwizard.employee.core;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.dropwizard.jackson.Jackson;
+import com.dropwizard.employee.EmployeeApplication;
+import com.dropwizard.employee.EmployeeConfiguration;
+import io.dropwizard.core.setup.Bootstrap;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -10,7 +12,14 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 public class EmployeeTest {
-    private static final ObjectMapper MAPPER = Jackson.newObjectMapper();
+    private static final ObjectMapper MAPPER = applicationObjectMapper();
+
+    private static ObjectMapper applicationObjectMapper() {
+        EmployeeApplication application = new EmployeeApplication();
+        Bootstrap<EmployeeConfiguration> bootstrap = new Bootstrap<>(application);
+        application.initialize(bootstrap);
+        return bootstrap.getObjectMapper();
+    }
 
     @Test
     public void serializesAllFieldsByName() throws Exception {
