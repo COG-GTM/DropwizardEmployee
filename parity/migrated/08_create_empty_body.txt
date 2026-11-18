@@ -1,0 +1,8 @@
+request: POST /employee
+status: 500
+content-type: application/json
+body:
+{
+  "code": 500,
+  "message": "There was an error processing your request. It has been logged (ID <masked>)."
+}

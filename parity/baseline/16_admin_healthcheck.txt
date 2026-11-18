@@ -1,0 +1,12 @@
+request: GET /healthcheck
+status: 200
+content-type: application/json
+body:
+{
+  "deadlocks": {
+    "healthy": true
+  },
+  "hibernate": {
+    "healthy": true
+  }
+}

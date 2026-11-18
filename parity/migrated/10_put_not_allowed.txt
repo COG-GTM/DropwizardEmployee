@@ -1,0 +1,8 @@
+request: PUT /employee
+status: 405
+content-type: application/json
+body:
+{
+  "code": 405,
+  "message": "HTTP 405 Method Not Allowed"
+}

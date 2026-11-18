@@ -4,6 +4,7 @@ import com.dropwizard.employee.core.Employee;
 import com.dropwizard.employee.core.Template;
 import com.dropwizard.employee.db.EmployeeDAO;
 import com.dropwizard.employee.resources.EmployeeResource;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
@@ -35,6 +36,9 @@ public class EmployeeApplication extends Application<EmployeeConfiguration> {
 
     @Override
     public void initialize(Bootstrap<EmployeeConfiguration> bootstrap) {
+        // Dropwizard 2+ ignores unknown JSON properties by default; keep the 1.x behaviour of rejecting them with 400.
+        bootstrap.getObjectMapper().enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
         // Enable variable substitution with environment variables
         bootstrap.setConfigurationSourceProvider(
                 new SubstitutingSourceProvider(
