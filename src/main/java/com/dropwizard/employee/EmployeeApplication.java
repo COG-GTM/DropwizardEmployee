@@ -5,16 +5,16 @@ import com.dropwizard.employee.core.Template;
 import com.dropwizard.employee.db.EmployeeDAO;
 import com.dropwizard.employee.resources.EmployeeResource;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import io.dropwizard.core.Application;
+import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.migrations.MigrationsBundle;
-import io.dropwizard.core.setup.Bootstrap;
-import io.dropwizard.core.setup.Environment;
-import io.dropwizard.views.common.ViewBundle;
+import io.dropwizard.setup.Bootstrap;
+import io.dropwizard.setup.Environment;
+import io.dropwizard.views.ViewBundle;
 
 import java.util.Map;
 

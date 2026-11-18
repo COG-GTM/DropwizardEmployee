@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.dropwizard.employee.EmployeeApplication;
 import com.dropwizard.employee.EmployeeConfiguration;
-import io.dropwizard.core.setup.Bootstrap;
+import io.dropwizard.setup.Bootstrap;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
