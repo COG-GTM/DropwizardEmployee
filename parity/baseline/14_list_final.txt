@@ -1,0 +1,24 @@
+request: GET /employee
+status: 200
+content-type: application/json
+body:
+[
+  {
+    "firstName": "Mayur",
+    "id": "<masked>",
+    "jobTitle": "Software Engineer",
+    "lastName": "Chougule"
+  },
+  {
+    "firstName": "Ada",
+    "id": "<masked>",
+    "jobTitle": "Analyst",
+    "lastName": "Lovelace"
+  },
+  {
+    "firstName": "No",
+    "id": "<masked>",
+    "jobTitle": null,
+    "lastName": "Title"
+  }
+]

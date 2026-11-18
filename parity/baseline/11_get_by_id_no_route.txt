@@ -1,0 +1,8 @@
+request: GET /employee/1
+status: 404
+content-type: application/json
+body:
+{
+  "code": 404,
+  "message": "HTTP 404 Not Found"
+}

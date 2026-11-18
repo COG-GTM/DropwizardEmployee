@@ -1,0 +1,17 @@
+# id	port	method	path	content-type	accept	body
+01_list_empty	8080	GET	/employee	-	application/json	-
+02_create_mayur	8080	POST	/employee	application/json	application/json	{"firstName":"Mayur","lastName":"Chougule","jobTitle":"Software Engineer"}
+03_create_ada	8080	POST	/employee	application/json	application/json	{"firstName":"Ada","lastName":"Lovelace","jobTitle":"Analyst"}
+04_list_two	8080	GET	/employee	-	application/json	-
+05_create_missing_jobtitle	8080	POST	/employee	application/json	application/json	{"firstName":"No","lastName":"Title"}
+06_create_malformed_json	8080	POST	/employee	application/json	application/json	{"firstName":
+07_create_unknown_field	8080	POST	/employee	application/json	application/json	{"firstName":"Grace","lastName":"Hopper","jobTitle":"Admiral","rank":"RADM"}
+08_create_empty_body	8080	POST	/employee	application/json	application/json	-
+09_create_text_plain	8080	POST	/employee	text/plain	application/json	hello
+10_put_not_allowed	8080	PUT	/employee	application/json	application/json	{}
+11_get_by_id_no_route	8080	GET	/employee/1	-	application/json	-
+12_unknown_path	8080	GET	/nope	-	application/json	-
+13_list_accept_xml	8080	GET	/employee	-	application/xml	-
+14_list_final	8080	GET	/employee	-	application/json	-
+15_admin_ping	8081	GET	/ping	-	*/*	-
+16_admin_healthcheck	8081	GET	/healthcheck	-	application/json	-

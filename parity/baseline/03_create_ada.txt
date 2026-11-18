@@ -1,0 +1,10 @@
+request: POST /employee
+status: 200
+content-type: application/json
+body:
+{
+  "firstName": "Ada",
+  "id": "<masked>",
+  "jobTitle": "Analyst",
+  "lastName": "Lovelace"
+}

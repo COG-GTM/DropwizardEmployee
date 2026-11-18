@@ -1,0 +1,8 @@
+request: POST /employee
+status: 400
+content-type: application/json
+body:
+{
+  "code": 400,
+  "message": "Unable to process JSON"
+}

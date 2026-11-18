@@ -1,0 +1,8 @@
+request: POST /employee
+status: 415
+content-type: application/json
+body:
+{
+  "code": 415,
+  "message": "HTTP 415 Unsupported Media Type"
+}
