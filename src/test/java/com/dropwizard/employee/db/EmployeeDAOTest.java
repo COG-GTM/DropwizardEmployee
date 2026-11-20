@@ -80,6 +80,18 @@ public class EmployeeDAOTest {
     }
 
     @Test
+    public void findAllSeesPendingChangesToManagedEmployees() {
+        Employee employee = dao.create(new Employee("Alan", "Turing", "Mathematician"));
+        session.flush();
+        employee.setJobTitle("Cryptanalyst");
+
+        List<Employee> actual = dao.findAll();
+
+        assertEquals(1, actual.size());
+        assertEquals("Cryptanalyst", actual.get(0).getJobTitle());
+    }
+
+    @Test
     public void findAllDoesNotAttachRowsToTheSession() {
         dao.create(new Employee("Grace", "Hopper", "Admiral"));
         session.flush();

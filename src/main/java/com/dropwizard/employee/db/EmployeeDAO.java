@@ -2,6 +2,8 @@ package com.dropwizard.employee.db;
 
 import com.dropwizard.employee.core.Employee;
 import io.dropwizard.hibernate.AbstractDAO;
+import org.hibernate.FlushMode;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.StatelessSession;
 import org.hibernate.jdbc.ReturningWork;
@@ -30,7 +32,12 @@ public class EmployeeDAO extends AbstractDAO<Employee> {
     // Read-only listing: a stateless session on the unit of work's connection skips
     // registering every row in the persistence context, which dominated this call.
     public List<Employee> findAll() {
-        return currentSession().doReturningWork(new ReturningWork<List<Employee>>() {
+        Session current = currentSession();
+        FlushMode flushMode = current.getFlushMode();
+        if (flushMode == FlushMode.AUTO || flushMode == FlushMode.ALWAYS) {
+            current.flush();
+        }
+        return current.doReturningWork(new ReturningWork<List<Employee>>() {
             @Override
             @SuppressWarnings("unchecked")
             public List<Employee> execute(Connection connection) {
